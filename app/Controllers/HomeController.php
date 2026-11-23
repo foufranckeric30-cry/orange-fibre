@@ -20,13 +20,28 @@ class HomeController
         try {
             $stmt = $this->pdo->query(
                 "SELECT id, nom, description, debit_mbps,
-                        prix_mensuel, frais_installation
+                        prix_mensuel, frais_installation, avantages
                  FROM offres
                  WHERE active = TRUE
                  ORDER BY prix_mensuel ASC"
             );
 
-            $offres = $stmt->fetchAll();
+            $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($offres as &$offre) {
+                if (is_string($offre['avantages'])) {
+                    $offre['avantages'] = json_decode(
+                        $offre['avantages'],
+                        true
+                    ) ?? [];
+                }
+
+                if (!is_array($offre['avantages'])) {
+                    $offre['avantages'] = [];
+                }
+            }
+
+            unset($offre);
 
         } catch (Throwable $e) {
             error_log($e->getMessage());
