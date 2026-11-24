@@ -1,26 +1,41 @@
+'use strict';
 
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
-
-if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('open');
-
-        menuToggle.setAttribute('aria-expanded', String(isOpen));
-        menuToggle.setAttribute(
-            'aria-label',
-            isOpen ? 'Fermer le menu' : 'Ouvrir le menu'
-        );
-
-        menuToggle.textContent = isOpen ? '✕' : '☰';
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.textContent = '☰';
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                form.reportValidity();
+            }
         });
     });
-}
 
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+
+            if (!allowed.includes(file.type)) {
+                alert('Format accepté : JPEG, PNG ou WEBP.');
+                input.value = '';
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('La photo ne doit pas dépasser 5 Mo.');
+                input.value = '';
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-confirm]').forEach(button => {
+        button.addEventListener('click', event => {
+            if (!confirm(button.dataset.confirm)) {
+                event.preventDefault();
+            }
+        });
+    });
+});
