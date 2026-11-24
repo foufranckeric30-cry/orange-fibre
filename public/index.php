@@ -177,11 +177,10 @@ try {
                     <a class="button secondary" href="?r=register">Créer un compte</a></div>
                 </section>
                 <section class="section">
-                    <h2>Nos services</h2>
+                    <h2>Découvrez Orange et ses offres</h2>
                     <div class="grid">
                         <article class="card"><h3>Offres Fibre</h3><p>Choisissez votre débit et votre abonnement.</p></article>
-                        <article class="card"><h3>Suivi permanent</h3><p>Consultez à tout moment l’évolution de votre demande.</p></article>
-                        <article class="card"><h3>Installation</h3><p>Suivez la prise en charge de votre raccordement.</p></article>
+                        
                     </div>
                 </section>
             ');
@@ -257,7 +256,7 @@ try {
                     if (is_scalar($benefit)) $html .= '<p>✓ ' . e($benefit) . '</p>';
                 }
 
-                $html .= '<a class="button" href="?r=subscribe&id=' . (int)$offer['id'] . '">Choisir cette offre</a></article>';
+                $html .= '<a class="button" href="?r=subscribe&id=' . (int)$offer['id'] . '">Prendre un abonnement</a></article>';
             }
 
             $html .= '</div>';
